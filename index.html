@@ -3,28 +3,40 @@
 <head>
   <title>Secure Image Access</title>
   <style>
-    body { font-family: Arial; text-align: center; margin-top: 50px; }
-    img { max-width: 90%; margin-top: 20px; }
+    body { font-family: Arial; margin: 0; padding: 0; }
+    header { display: flex; align-items: center; padding: 10px 20px; background-color: #f5f5f5; }
+    header img { height: 40px; width: auto; margin-right: 10px; }
+    main { text-align: center; margin-top: 50px; }
+    img#image { max-width: 90%; margin-top: 20px; }
     .hidden { display: none; }
+    button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    input { padding: 10px; font-size: 16px; width: 200px; }
   </style>
 </head>
 <body>
 
-  <h2>Enter Access Code</h2>
-  <input type="password" id="code" placeholder="Enter code">
-  <br><br>
-  <button onclick="checkCode()">Unlock</button>
+  <!-- Header with logo -->
+  <header>
+    <img src="SMKSP.png" alt="SMKSP">
+    <h2>Secure Image Access</h2>
+  </header>
 
-  <div id="result" class="hidden">
-    <h3>✅ Code accepted</h3>
-    <img id="image" src="">
+  <main>
+    <input type="password" id="code" placeholder="Enter code">
     <br><br>
-    <a id="download" download>Download Image</a>
-  </div>
+    <button onclick="checkCode()">Unlock</button>
+
+    <div id="result" class="hidden">
+      <h3>✅ Code accepted</h3>
+      <img id="image" src="">
+      <br><br>
+      <a id="download" download>Download Image</a>
+    </div>
+  </main>
 
   <script>
     const codes = {
-      "080210060195": "AUNI NAJIHAH BINTI AZHAR.png",
+      "IMG001": "img001.jpg",
       "IMG002": "img002.jpg",
       "IMG003": "img003.jpg"
     };
