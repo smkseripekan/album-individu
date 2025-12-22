@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Secure Image Access</title>
+  <style>
+    body { font-family: Arial; text-align: center; margin-top: 50px; }
+    img { max-width: 90%; margin-top: 20px; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+  <h2>Enter Access Code</h2>
+  <input type="password" id="code" placeholder="Enter code">
+  <br><br>
+  <button onclick="checkCode()">Unlock</button>
+
+  <div id="result" class="hidden">
+    <h3>✅ Code accepted</h3>
+    <img id="image" src="">
+    <br><br>
+    <a id="download" download>Download Image</a>
+  </div>
+
+  <script>
+    const codes = {
+      "080210060195": "AUNI NAJIHAH BINTI AZHAR.png",
+      "IMG002": "img002.jpg",
+      "IMG003": "img003.jpg"
+    };
+
+    function checkCode() {
+      const input = document.getElementById("code").value.trim();
+      if (codes[input]) {
+        document.getElementById("image").src = codes[input];
+        document.getElementById("download").href = codes[input];
+        document.getElementById("result").classList.remove("hidden");
+      } else {
+        alert("Invalid code");
+      }
+    }
+  </script>
+
+</body>
+</html>
