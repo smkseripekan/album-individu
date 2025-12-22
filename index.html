@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Secure Image Access</title>
+  <title>e-SMKSP</title>
   <style>
     body { font-family: Arial; margin: 0; padding: 0; }
     header { display: flex; align-items: center; padding: 10px 20px; background-color: #f5f5f5; }
@@ -18,25 +18,25 @@
   <!-- Header with logo -->
   <header>
     <img src="SMKSP.png" alt="Logo">
-    <h2>Secure Image Access</h2>
+    <h2>Gambar Passport Warga SMKSP</h2>
   </header>
 
   <main>
     <input type="password" id="code" placeholder="Enter code">
     <br><br>
-    <button onclick="checkCode()">Unlock</button>
+    <button onclick="checkCode()">Sahkan</button>
 
     <div id="result" class="hidden">
-      <h3>✅ Code accepted</h3>
+      <h3>Nombor kad pengenalan diterima</h3>
       <img id="image" src="">
       <br><br>
-      <a id="download" download>Download Image</a>
+      <a id="download" download>Muat turun gambar</a>
     </div>
   </main>
 
   <script>
     const codes = {
-      "IMG001": "img001.jpg",
+      "080210060195": "AIMI NABILAH BINTI ISMAIL.png",
       "IMG002": "img002.jpg",
       "IMG003": "img003.jpg"
     };
