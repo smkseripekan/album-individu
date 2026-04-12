@@ -126,6 +126,14 @@
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
+
+      #image {
+  width: 100%;
+  max-width: 413px;
+  height: 590px;
+  border: none;
+  border-radius: 10px;
+}
 }
   </style>
 </head>
@@ -188,12 +196,11 @@
     const data = codes[input];
 
     document.getElementById("studentName").textContent = data.name;  // 👈 LETAK SINI
-    document.getElementById("image").src = data.file;
+    document.getElementById("image").src = "images/" + data.file;
     document.getElementById("image2").src = data.drive;
 
     const fileId = data.file.split("/d/")[1].split("/")[0];
-    document.getElementById("download").href =
-      "https://drive.google.com/uc?export=download&id=" + fileId;
+    document.getElementById("download").href = "images/" + data.file;
 
     result.classList.remove("hidden");
   } else {
