@@ -108,7 +108,7 @@
 
 <header>
   <img src="SMKSP.png">
-  <h2>e-SMKSP | Sistem Gambar Passport</h2>
+  <h2>e-SMKSP | <span id="datetime"></span></h2>
 </header>
 
 <main>
@@ -162,6 +162,32 @@
       error.textContent = "Nombor kad pengenalan tidak sah";
     }
   }
+
+function updateDateTime() {
+  const now = new Date();
+
+  const day = now.getDate();
+  const month = now.getMonth() + 1;
+  const year = now.getFullYear();
+
+  let hours = now.getHours();
+  const minutes = now.getMinutes().toString().padStart(2, '0');
+
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // kalau 0 jadi 12
+
+  const timeString = `${day}/${month}/${year} | ${hours}:${minutes} ${ampm}`;
+
+  document.getElementById("datetime").textContent = timeString;
+}
+
+// update setiap saat
+setInterval(updateDateTime, 1000);
+
+// run sekali masa load
+updateDateTime();
+
 </script>
 
 </body>
