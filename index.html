@@ -109,6 +109,14 @@
   letter-spacing: 2px;
   opacity: 0.7;
   font-weight: 500;
+
+      #studentName {
+  margin: 8px 0 15px;
+  font-weight: 600;
+  font-size: 15px;
+  color: #1e3a8a;
+  letter-spacing: 0.5px;
+}
 }
   </style>
 </head>
@@ -133,9 +141,11 @@
     <div id="result" class="hidden">
       <h3>Maklumat Dijumpai</h3>
 
-      <iframe id="image"></iframe>
+<p id="studentName"></p>
 
-      <a id="download" class="download-btn" download>Muat Turun</a>
+<iframe id="image"></iframe>
+
+<a id="download" class="download-btn" download>Muat Turun</a>
       <p class="credit">© fahimirf 2026</p>
     </div>
   </div>
@@ -143,8 +153,11 @@
 
 <script>
   const codes = {
-    "080210060195": "https://lh3.googleusercontent.com/file/d/1XeiTti3ClAAWMKXlRp8Epxn83t3GU2ge"
-  };
+  "080210060195": {
+    name: "Nama Pelajar",
+    file: "https://drive.google.com/file/d/1GOOXjUFVer837kSVu62EuclhUDwesQza/preview"
+  }
+};
 
   function handleKey(e) {
     if (e.key === "Enter") {
@@ -153,25 +166,29 @@
   }
 
   function checkCode() {
-    const input = document.getElementById("code").value.trim();
-    const error = document.getElementById("error");
-    const result = document.getElementById("result");
+  const input = document.getElementById("code").value.trim();
+  const error = document.getElementById("error");
+  const result = document.getElementById("result");
 
-    if (codes[input]) {
-      document.getElementById("image").src = codes[input];
+  // reset dulu
+  result.classList.add("hidden");
+  error.textContent = "";
+    
+  if (codes[input]) {
+    const data = codes[input];
 
-      // download link
-      const fileId = codes[input].split("/d/")[1].split("/")[0];
-      document.getElementById("download").href =
-        "https://drive.google.com/uc?export=download&id=" + fileId;
+    document.getElementById("studentName").textContent = data.name;  // 👈 LETAK SINI
+    document.getElementById("image").src = data.file;
 
-      result.classList.remove("hidden");
-      error.textContent = "";
-    } else {
-      result.classList.add("hidden");
-      error.textContent = "Nombor kad pengenalan tidak sah";
-    }
+    const fileId = data.file.split("/d/")[1].split("/")[0];
+    document.getElementById("download").href =
+      "https://drive.google.com/uc?export=download&id=" + fileId;
+
+    result.classList.remove("hidden");
+  } else {
+    error.textContent = "Nombor kad pengenalan tidak sah";
   }
+}
 
 function updateDateTime() {
   const now = new Date();
