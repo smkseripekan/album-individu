@@ -169,14 +169,14 @@
 </main>
 
 <script>
+  const BASE_URL = "https://raw.githubusercontent.com/smkseripekan/album-individu/main/images/";
   const codes = {
   "080210060195": {
     name: "epat",
-    file: "https://raw.githubusercontent.com/smkseripekan/album-individu/refs/heads/main/ADLI%20FAHMI%20BIN%20KHARULANUAR.png",
+    file: "ADLI FAHMI BIN KHARULANUAR.png",
     drive: "https://drive.google.com/file/d/1Yp9rQnRFlOGu_AKqtuqLMewi1Rshd-S2/preview"
   }
 };
-
   function handleKey(e) {
     if (e.key === "Enter") {
       checkCode();
@@ -188,26 +188,24 @@
   const error = document.getElementById("error");
   const result = document.getElementById("result");
 
-  // reset dulu
   result.classList.add("hidden");
   error.textContent = "";
-    
+
   if (codes[input]) {
     const data = codes[input];
 
-    document.getElementById("studentName").textContent = data.name;  // 👈 LETAK SINI
-    document.getElementById("image").src = data.file;
-document.getElementById("image2").src = data.drive;
+    const imageURL = BASE_URL + encodeURIComponent(data.file);
 
-    const fileId = data.file.split("/d/")[1].split("/")[0];
-    document.getElementById("download").href = data.file;
+    document.getElementById("studentName").textContent = data.name;
+    document.getElementById("image").src = imageURL;
+    document.getElementById("image2").src = data.drive;
+    document.getElementById("download").href = imageURL;
 
     result.classList.remove("hidden");
   } else {
     error.textContent = "Nombor kad pengenalan tidak sah";
   }
 }
-
 function updateDateTime() {
   const now = new Date();
 
