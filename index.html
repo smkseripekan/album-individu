@@ -1,149 +1,168 @@
 <!DOCTYPE html>
-<html>
+<html lang="ms">
 <head>
+  <meta charset="UTF-8">
   <title>e-SMKSP</title>
+
   <style>
-    body { font-family: Arial; margin: 0; padding: 0; }
-    header { display: flex; align-items: center; padding: 10px 20px; background-color: #f5f5f5; }
-    header img { height: 40px; width: auto; margin-right: 10px; }
-    main { text-align: center; margin-top: 50px; }
-    img#image { max-width: 90%; margin-top: 20px; }
-    .hidden { display: none; }
-    button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
-    input { padding: 10px; font-size: 16px; width: 200px; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #eef2f7;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      padding: 15px 30px;
+      background: #1e3a8a;
+      color: white;
+    }
+
+    header img {
+      height: 45px;
+      margin-right: 15px;
+    }
+
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 60px;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      width: 350px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 15px;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #2563eb;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    #error {
+      color: red;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    #result {
+      margin-top: 25px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 300px;
+      border-radius: 10px;
+      border: none;
+      margin-top: 10px;
+    }
+
+    a.download-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #16a34a;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+
+    a.download-btn:hover {
+      background: #15803d;
+    }
   </style>
 </head>
+
 <body>
 
-  <!-- Header with logo -->
-  <header>
-    <img src="SMKSP.png" alt="Logo">
-    <h2>Gambar Passport Warga SMKSP</h2>
-  </header>
+<header>
+  <img src="SMKSP.png">
+  <h2>e-SMKSP | Sistem Gambar Passport</h2>
+</header>
 
-  <main>
-    <input type="password" id="code" placeholder="Kad pengenalan tanpa -">
-    <br><br>
+<main>
+  <div class="card">
+    <h2>Semakan Gambar</h2>
+
+    <input type="password" id="code" placeholder="Masukkan No. IC tanpa -" onkeypress="handleKey(event)">
+    
     <button onclick="checkCode()">Sahkan</button>
 
+    <div id="error"></div>
+
     <div id="result" class="hidden">
-      <h3>Nombor kad pengenalan diterima</h3>
-      <img id="image" src="">
-      <br><br>
-      <a id="download" download>Muat turun gambar</a>
+      <h3>Maklumat Dijumpai</h3>
+
+      <iframe id="image"></iframe>
+
+      <a id="download" class="download-btn" download>Muat Turun</a>
     </div>
-  </main>
+  </div>
+</main>
 
-  <script>
-    const codes = {
-      "080921101491": "AHMAD AFIF IRSYAD BIN MOHD FAIZAL.png",
-      "080528060662": "AIMI NABILAH BINTI ISMAIL.png",
-      "080623060580": "AIRIN QISTINA BINTI MUHAMAD IMRAN.png",
-      "081226060338": "AISYAH SOFIYYA BINTI SHOFFIAN SAFRI.png",
-      "080906060046": "ARIESYA SURAYA BINTI SHAHAR BAKHTIAR.png",
-      "081031061058": "ARINA NASRIN BINTI KAMARUDZAMAN.png",
-      "080907060486": "AUNI FAQIHAH BINTI KAMARUDIN.png",
-      "080722060156": "AUNI NAJIHAH BINTI AZHAR.png",
-      "080223060442": "HIDAYAH NURMAJIDAH BINTI RIZALAFFENDI.png",
-      "080602060338": "KHADEEJAH SAFIYA BINTI KHARIL AFUAAJAA.png",
-      "080115060699": "MUHAMMAD FAEEZ IZWAN BIN ZAKARIA.png",
-      "080608100206": "NUR AINA DAMIA BINTI ABDUL RAZAK.png",
-      "080503060180": "NUR ALYAA BATRISYIA BINTI ABDUL JABAL.png",
-      "080419080226": "NUR ANISAH BINTI ADZLAN.png",
-      "080720060080": "NUR ZULAIKA MAISARA BINTI ASRI.png",
-      "080929060532": "NURIN AISYA SOFEA BINTI CHE SENOH.png",
-      "080617080024": "NURUL QYSTINA BINTI MOHD RUZAIMI.png",
-      "080628060547": "SYAMIM BIN SHAMSUDIN.png",
-      "080325060603": "THAQIF NAJDAT BIN MOHD ROSDI.png",
-      "080513060328": "AIN MUNIRAH ROHAIMI BINTI ABDULLAH.png",
-      "080113060302": "FARAH NABILAH BINTI ROSLI.png",
-      "080131060461": "HAIKAL DANIAL BIN HUSEIN.png",
-      "080102060163": "MEGAT DANISH IKHWAN BIN MEGAT MOHD FARIZAT.png",
-      "080517060237": "MUHAMMAD AFIQ HASSAN BIN ADHAR.png",
-      "080819060435": "MUHAMMAD DANISH HAIQAL BIN HAMIDUN.png",
-      "080613060501": "MUHAMMAD HAIKAL ZIKRI BIN MUSA.png",
-      "080322060528": "NOOR HASHIMAH HASNA BINTI IDRIS.png",
-      "081006060088": "NUR BALQIS UMAIRA BINTI MOHAMAD NYASRIQ.png",
-      "080913060378": "NUR UMAIRAH IZATI BINTI IZAM SHAIRY.png",
-      "080412060046": "NURINA BATRISYIA BINTI MOHD REDUAN.png",
-      "080210100214": "SAFI SERI BALQIS BINTI SHAIFFUL BAHARI.png",
-      "081120060372": "SUFIYA NUR ZAHIRAH BINTI MOHD ZAHID.png",
-      "080814060735": "WAN AIMAN AMININ BIN W.RAZMI.png",
-      "080305060497": "AHMAD SYAHRUL BIN SAHARUDDIN.png",
-      "080201030146": "AINNUR RIZQIYYAH BINTI MOHD AZUAN.png",
-      "081005060641": "AMIR ASYRAF BIN HIRUL ALFARIZAN.png",
-      "080318110406": "AQILAH KHAIRIAH BINTI KAMARUNZAMAN.png",
-      "080717060688": "HADIFA ASHADEEYA BINTI HAZRI FADZLI.png",
-      "080620100292": "HAZATUL HUSNA NAJWA BINTI MOHD HERMAN.png",
-      "081220060222": "INTAN NUR BALQIS BINTI RAMZI.png",
-      "080801060533": "IZZ RAIYAN BIN MOHD FUAD.png",
-      "080221020906": "JAMILAH BINTI HAKIM.png",
-      "080715060887": "MOHAMAD KHAIRUL FAHMY BIN MOHD GHAZALI.png",
-      "080923060507": "MUHAMMAD AFIZUL FAZRIL BIN MOHAMAD AFFANDI.png",
-      "080203090011": "MUHAMMAD AIDIL ZAQUAN BIN ABD RAZAK.png",
-      "080225060729": "MUHAMMAD DANISH FIRDAUS BIN FAIZUL IZWAN.png",
-      "080210060195": "MUHAMMAD FAHIM IRFAN BIN MAHAYUDDIN.png",
-      "080814060671": "MUHAMMAD IMRAN RAYYAN BIN SHAHRULNIZAM.png",
-      "080829060332": "NOR ADRIANI IRDINA BINTI MOHD SUHAIMI.png",
-      "080515060284": "NUR YASMIN KARMILA BINTI AHMAD SALIMI.png",
-      "081214060154": "NUR ZAMYLIA SYAZWANI BINTI MUHAMMAD ZAMRO.png",
-      "081117060152": "NURIN SYAHQINA BINTI SHAHRUM.png",
-      "080321060542": "NURLAILI BINTI NORAZAHAR.png",
-      "080824060042": "NURUL HAFIZA BINTI YAHYA.png",
-      "080128060567": "SHEIKH ADAM ARIF BIN SHEIKH MOHAMAD SAUFIAN.png",
-      "080117060166": "IYLIA RAIHANAH BINTI AHMAD.png",
-      "080730060164": "NOOR ALYAA IZZAH BINTI YAMANI.png",
-      "080801060752": "NUR ALISA SHAFIRA BINTI ANUAR.png",
-      "080515060188": "NURDANIA BATRISYA BINTI MOHD SUHAIRY HADAEY.png",
-      "080203060146": "NURUL AMIRAH SYUHADA BINTI NOOR KHAIRUZAM.png",
-      "081128060334": "SITI NUR KHAIRAH BINTI MOHD YAZID.png",
-      "080915110092": "WAN NUR SYAFIQAH BINTI WAN SIDI.png",
-      "080926060553": "HARITH IMRAN BIN ROSLAN.png",
-      "080313060323": "MUHAMMAD HARIZ HAIMAN BIN KUNUFIKA.png",
-      "080703060185": "MUHAMMAD RAZIN ADHAM BIN NASRAN.png",
-      "080304060559": "MUHAMMAD SYAQIB HAZEEM BIN ABDULLAH.png",
-      "080928060661": "NOR HAIREL HAIKAL BIN NOR KHAIRUL JASMIN.png",
-      "081025020831": "ROFIE BIN ABU BAKAR.png",
-      "080805060039": "ADLI FAHMI BIN KHARULANUAR.png",
-      "080605060245": "AHMAD AQIL AJWAD BIN ABD GHANI.png",
-      "080629060426": "AIMIN JASMIN BINTI MOHD ROSDI.png",
-      "080102060104": "FARIHIN ALYAA BINTI MUHAMAD KHAIRIL AFENDEY.png",
-      "080203060525": "MUHAMMAD ADIB FARHAN BIN MOHD SOFIAN.png",
-      "080224030173": "MUHAMMAD HAFIZ HAKIM BIN MOHD HAZUAN.png",
-      "080205060019": "MUHAMMAD RASUL AMIR BIN MOHD NIZAM.png",
-      "080403060845": "MUHAMMAD THAQIF AMZAR BIN MOHD NADZRI.png",
-      "081025020823": "NAWAWI BIN ABU BAKAR.png",
-      "080622060466": "NURFARISYA IRDINA BINTI KHAIRUL BAHTIAR.png",
-      "080625060146": "NURUL AZZA LAILY BINTI MOHD ARMAN.png",
-      "080902060196": "RAUDHAH HAYATI BINTI MOHD SANI.png",
-      "080811140254": "FATIN KHAIRINA BINTI ABD HALIM.png",
-      "080608060312": "IRIS ZULAIKHA BINTI MOHAMAD FADZLI.png",
-      "080607060097": "MOHAMAD HAIKAL BIN M HANAPI.png",
-      "080606060597": "MUHAMMAD ADAM HAIKAL BIN NAZAUDIN.png",
-      "080512060297": "MUHAMMAD FAKHRUDDIN BIN MOHD FADZIR.png",
-      "080603060401": "MUHAMMAD FIRDAUS BIN MUHAMMAD SAID.png",
-      "081129060301": "MUHAMMAD ILMAN ARIS BIN BADRULZAMAN.png",
-      "080618060527": "MUHAMMAD KHAIRUL NIZAM BIN ABDULLAH.png",
-      "080806060479": "MUHAMMAD NUFAIL AKIF BIN MOHD NAFIS.png",
-      "080717060098": "NUR AQILAH AYUNNI BINTI JAFRI.png",
-      "080627060246": "NUR IRSALINA HAZIQAH BINTI SAAUDI.png",
-      "080506060370": "NUR QASEH QISTINA IZZANY BINTI ABDUL RAHMAN.png",
-      "080213060174": "NURFATIHATUL KHAIRINA BINTI MOHD NORDIN.png",
-      "080309060216": "NURUL HUDA BATRISYA BINTI A SHARRIF.png",
-      "080214110102": "RANIA ZAFIRAH ZAKRI BINTI ABDUL RAHMAN.png"
-          };
+<script>
+  const codes = {
+    "080210060195": "https://drive.google.com/file/d/1GOOXjUFVer837kSVu62EuclhUDwesQza/preview"
+  };
 
-    function checkCode() {
-      const input = document.getElementById("code").value.trim();
-      if (codes[input]) {
-        document.getElementById("image").src = codes[input];
-        document.getElementById("download").href = codes[input];
-        document.getElementById("result").classList.remove("hidden");
-      } else {
-        alert("Nombor kad pengenalan tidak sah");
-      }
+  function handleKey(e) {
+    if (e.key === "Enter") {
+      checkCode();
     }
-  </script>
+  }
+
+  function checkCode() {
+    const input = document.getElementById("code").value.trim();
+    const error = document.getElementById("error");
+    const result = document.getElementById("result");
+
+    if (codes[input]) {
+      document.getElementById("image").src = codes[input];
+
+      // download link
+      const fileId = codes[input].split("/d/")[1].split("/")[0];
+      document.getElementById("download").href =
+        "https://drive.google.com/uc?export=download&id=" + fileId;
+
+      result.classList.remove("hidden");
+      error.textContent = "";
+    } else {
+      result.classList.add("hidden");
+      error.textContent = "Nombor kad pengenalan tidak sah";
+    }
+  }
+</script>
 
 </body>
 </html>
