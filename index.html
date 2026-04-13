@@ -89,19 +89,38 @@
     }
 
     a.download-btn {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 10px 20px;
-      background: #16a34a;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-    }
+  display: inline-block;
+  margin-top: 15px;
+  padding: 12px 22px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+
+  /* 🔥 shadow */
+  box-shadow: 0 6px 15px rgba(34, 197, 94, 0.4);
+
+  transition: all 0.2s ease;
+}
 
     a.download-btn:hover {
-      background: #15803d;
-    }
+  background: linear-gradient(135deg, #16a34a, #15803d);
 
+  /* 🔥 naik sikit */
+  transform: translateY(-2px);
+
+  /* shadow lebih kuat */
+  box-shadow: 0 10px 20px rgba(34, 197, 94, 0.5);
+}
+
+    a.download-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3);
+}
+    
     .credit {
   margin-top: 20px;
   font-size: 12px;
@@ -147,7 +166,7 @@
 
 <main>
   <div class="card">
-    <h2>Semakan Gambar Individu17</h2>
+    <h2>Semakan Gambar Individu14</h2>
 
     <input type="password" id="code" placeholder="Masukkan No. IC tanpa -" onkeypress="handleKey(event)">
     
