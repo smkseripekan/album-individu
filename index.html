@@ -109,8 +109,9 @@
   letter-spacing: 2px;
   opacity: 0.7;
   font-weight: 500;
+}
 
-      #studentName {
+#studentName {
   margin: 8px 0 15px;
   font-weight: 600;
   font-size: 15px;
@@ -118,7 +119,7 @@
   letter-spacing: 0.5px;
 }
 
-      .extra-preview {
+.extra-preview {
   width: 100%;
   height: 250px;
   margin-top: 15px;
@@ -127,13 +128,12 @@
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-      #image {
+#image {
   width: 100%;
   max-width: 413px;
   height: 590px;
-  border: none;
   border-radius: 10px;
-}
+  object-fit: cover;
 }
   </style>
 </head>
@@ -159,17 +159,16 @@
 
 <p id="studentName"></p>
 
-<iframe id="image"></iframe>
+<img id="image">
+<a id="download" download>Muat Turun</a>
 
-<a id="download" class="download-btn" download>Muat Turun</a>
-      <iframe id="image2" class="extra-preview"></iframe>
-      <p class="credit">© fahimirf 2026</p>
+<iframe id="image2" class="extra-preview"></iframe>
+<p class="credit">© fahimirf 2026</p>
     </div>
   </div>
 </main>
 
 <script>
-  const BASE_URL = "https://raw.githubusercontent.com/smkseripekan/album-individu/refs/heads/main/";
   const codes = {
   "080210060195": {
     name: "epat",
@@ -193,13 +192,10 @@
 
   if (codes[input]) {
     const data = codes[input];
-
-    const imageURL = BASE_URL + encodeURIComponent(data.file);
-
     document.getElementById("studentName").textContent = data.name;
-    document.getElementById("image").src = imageURL;
+    document.getElementById("image").src = data.file;
+    document.getElementById("download").href = data.file;
     document.getElementById("image2").src = data.drive;
-    document.getElementById("download").href = imageURL;
 
     result.classList.remove("hidden");
   } else {
